@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./node_modules/jquery/dist/jquery.js"></script>
+</head>
+
+<body>
+    <label for="">Value in sec : <input id="sec" value="90"></label>
+    <button id="set">Set</button>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="reset">Reset</button>
+    <br>
+    <button id="setHouse">Set House</button>
+    <br>
+    <input type="radio" id="g1" name="house" value="1"> <input id="1" text=""><br>
+    <input type="radio" id="g2" name="house" value="2"> <input id="2" text=""><br>
+    <input type="radio" id="g3" name="house" value="3"> <input id="3" text=""><br>
+    <input type="radio" id="g4" name="house" value="4"> <input id="4" text=""><br>
+    <input type="radio" id="g5" name="house" value="5"> <input id="5" text=""><br>
+    <input type="radio" id="g6" name="house" value="6"> <input id="6" text=""><br>
+    <input type="radio" id="g7" name="house" value="7"> <input id="7" text=""><br>
+    <input type="radio" id="g8" name="house" value="8"> <input id="8" text=""><br>
+    <script>
+        var $set = $('#set');
+        var $start = $('#start');
+        var $val = $('#sec') || 0;
+        var house = localStorage.getItem('house') || 1;
+        if (!localStorage.getItem('house')) {
+            localStorage.setItem('house', house);
+        }
+        // alert(house);
+        $('#g' + house).prop('checked', "checked");
+
+        function getHouse() {
+            var h1 = localStorage.getItem("h1");
+            var h2 = localStorage.getItem("h2");
+            var h3 = localStorage.getItem("h3");
+            var h4 = localStorage.getItem("h4");
+            var h5 = localStorage.getItem("h5");
+            var h6 = localStorage.getItem("h6");
+            var h7 = localStorage.getItem("h7");
+            var h8 = localStorage.getItem("h8");
+            $('#1').val(h1);
+            $('#2').val(h2);
+            $('#3').val(h3);
+            $('#4').val(h4);
+            $('#5').val(h5);
+            $('#6').val(h6);
+            $('#7').val(h7);
+            $('#8').val(h8);
+        }
+        getHouse();
+
+        function setHouse() {
+            localStorage.setItem("h1", $('#1').val());
+            localStorage.setItem("h2", $('#2').val());
+            localStorage.setItem("h3", $('#3').val());
+            localStorage.setItem("h4", $('#4').val());
+            localStorage.setItem("h5", $('#5').val());
+            localStorage.setItem("h6", $('#6').val());
+            localStorage.setItem("h7", $('#7').val());
+            localStorage.setItem("h8", $('#8').val());
+            let val = $('[name="house"]:checked').val();
+            localStorage.setItem("house", val);
+        }
+        $(function() {
+            $('#setHouse').on('click', function() {
+                setHouse();
+            });
+            $set.on('click', function() {
+                var value = $val.val();
+                setHouse();
+                localStorage.setItem('value', value);
+                localStorage.setItem('status', 'setvalue');
+            });
+            $start.on('click', function() {
+                localStorage.setItem('status', 'start');
+            });
+            $('#stop').on('click', function() {
+                localStorage.setItem('status', 'stop');
+            });
+            $('#reset').on('click', function() {
+                localStorage.setItem('status', 'reset');
+            });
+        });
+    </script>
+</body>
+
+</html>
